@@ -1,0 +1,22 @@
+version: "3.1"
+
+services:
+  mongo:
+    image: mongo:latest
+    container_name: 'BDD'
+    ports:
+      - '27017:27017'
+    restart: always
+
+  api:
+    volumes:
+      - './Front:/usr/src/app'
+    container_name: 'containerFront'
+    build: ./Front/build/nodeApi
+    ports:
+      - '8080:8080'
+    environment:
+      - NODE_ENV=production
+    restart: always
+    depends_on: 
+      - mongo
